@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routine Login</title>
+    <style>
+       
+      
+
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #9f3fa4, #d3889d);
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url(University.jpg);
+            background-color: #cccccc;
+            color: #fff;
+        }
+
+        .container {
+            width: 400px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid rgba(206, 25, 25, 0.525);
+            border-radius: 10px;
+            outline: none;
+            background: rgba(183, 172, 18, 0.773);
+            color: #fff;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        input:focus {
+            border-color: #88d3ce;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background: linear-gradient(135deg, #4d45e2, #88d3ce);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .link {
+            margin-top: 20px;
+        }
+
+        .link a {
+            color: #3b363b;
+            text-decoration: none;
+            font-weight: bold;
+            font-family: 'Poppins', sans-serif;
+            transition: color 0.3s ease;
+        }
+
+        .link a:hover {
+            color: #fff;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 450px) {
+            .container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            button {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+   
+   
+   
+    <div id="app"></div>
+
+    <script>
+        const users = [];
+
+        function showLoginPage() {
+            document.getElementById('app').innerHTML = `
+                <div class="container">
+                    <h2>Login</h2>
+                    <input type="text" id="loginUsername" placeholder="Username" />
+                    <input type="password" id="loginPassword" placeholder="Password" />
+                    <button onclick="login()">Login</button>
+                    <div class="link">
+                        <a href="#" onclick="showRegistrationPage()">Don't have an account? Register</a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showRegistrationPage() {
+            document.getElementById('app').innerHTML = `
+                <div class="container">
+                    <h2>Register</h2>
+                    <input type="text" id="regUsername" placeholder="Username" />
+                    <input type="password" id="regPassword" placeholder="Password" />
+                    <button onclick="register()">Register</button>
+                    <div class="link">
+                        <a href="#" onclick="showLoginPage()">Already have an account? Login</a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function register() {
+            const username = document.getElementById('regUsername').value;
+            const password = document.getElementById('regPassword').value;
+
+            if (username && password) {
+                const userExists = users.find(user => user.username === username);
+
+                if (userExists) {
+                    alert('Username already exists!');
+                } else {
+                    users.push({ username, password });
+                    alert('Registration successful!');
+                    showLoginPage();
+                }
+            } else {
+                alert('Please fill in all fields.');
+            }
+        }
+
+        function login() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+
+            const user = users.find(user => user.username === username && user.password === password);
+
+            if (user) {
+                alert('Login successful!');
+                window.location.href = 'routine.html';
+            } else {
+                alert('Invalid username or password.');
+            }
+        }
+
+        showLoginPage();
+        
+    </script>
+
+
+</body>
+</html>
