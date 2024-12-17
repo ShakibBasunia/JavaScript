@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routine</title>
+    <style>
+  <style>
+    /* Scrollable container styles */
+    .scrollable-container {
+      width: 300px;           
+      height: 200px;          
+      overflow-y: auto;       
+      border: 1px solid #ddd;  
+      padding: 10px;
+    }
+
+   
+    .scrollable-container::-webkit-scrollbar {
+      width: 10px;             
+    }
+
+    .scrollable-container::-webkit-scrollbar-thumb {
+      background-color: #888; 
+      border-radius: 5px;      
+    }
+
+    .scrollable-container::-webkit-scrollbar-thumb:hover {
+      background-color: #555;  
+    }
+
+    .scrollable-container::-webkit-scrollbar-track {
+      background: #f0f0f0;     
+    }
+
+
+
+    body {
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4c1cf;
+            color: #5a4630;
+        }
+
+        .header {
+            text-align: center;
+            background-color: #8b3c8b;
+            color: #fdf4e6;
+            padding: 50px 20px;
+            border-bottom: 5px solid #5b495b;
+        }
+
+        .header h2 {
+            font-size: 36px;
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            font-size: 18px;
+            font-weight: 300;
+            margin: 10px 0;
+            font-style: italic;
+        }
+
+        .header em {
+            font-size: 20px;
+            font-style: normal;
+        }
+
+        h4 {
+            margin-top: 20px;
+            font-size: 22px;
+            color: #e6fdf0;
+        }
+
+        .button-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .button-container button {
+            padding: 12px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            background-color: #9699ad;
+            color: #29211a;
+            cursor: pointer;
+            margin: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-container button:hover {
+            background-color: #e08a11;
+        }
+
+        .filter-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .filter-container select {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #5c4b37;
+            border-radius: 5px;
+            width: 200px;
+            background-color: #fdf5e6;
+            color: #614e3a;
+        }
+
+        table {
+            width: 90%;
+            margin: 30px auto;
+            border-collapse: collapse;
+            background-color: #fdf5e6;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #d9a86c;
+            font-size: 16px;
+        }
+
+        th {
+            background-color: #6c56a5;
+            color: #fde6e6;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9e8d0;
+        }
+
+        tr:hover {
+            background-color: #be37b9;
+            cursor: pointer;
+        }
+
+        .break {
+            background-color: #e8d2b7;
+            font-weight: bold;
+        }
+  </style>
+
+    
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.22/jspdf.plugin.autotable.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const filterSelect = document.getElementById('dayFilter');
+            const searchInput = document.getElementById('searchBar');
+            const rows = document.querySelectorAll('tbody tr');
+
+         
+         
+
+
+            filterSelect.addEventListener('change', function () {
+                const selectedDay = filterSelect.value;
+
+                rows.forEach(row => {
+                    const dayCell = row.querySelector('th');
+                    if (dayCell && (selectedDay === 'All' || dayCell.textContent === selectedDay)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+
+            document.getElementById('printButton').addEventListener('click', function () {
+                window.print();
+            });
+
+            
+            function updateClock() {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString();
+    const dateString = now.toLocaleDateString();
+    clockElement.textContent = `Current Date: ${dateString} | Current Time: ${timeString}`;
+}
+
+
+            document.getElementById('convertToPdfButton').addEventListener('click', function () {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                doc.autoTable({
+                    html: 'table',
+                    startY: 20,
+                    theme: 'striped',
+                    headStyles: { fillColor: [139, 94, 60] },
+                    bodyStyles: { fontSize: 10 }
+                });
+                doc.save('routine.pdf');
+            });
+        });
+    </script>
+</head>
+<body>
+
+  
+    <div class="header">
+      <img src="bdu.png" alt="">
+      <div id="clock" style="font-size: 36px;margin-bottom: 16px;"></div>
+        <h2>Bangladesh Digital University </h2>
+        
+        <p>
+            <em>
+                Faculty of Digital Transformation Engineering<br />
+                Department of Educational Technology and Engineering (EdTE)
+            </em>
+        </p>
+        
+        <h4>
+            
+       
+            Class Routine of   
+             <marquee behavior="scroll" direction="left" scrollamount="6"> Educational Technology and Engineering (EdTE))<br />     </marquee>
+            Semester: July 2024
+       
+          </h4>
+    </div>
+  
+
+
+    <div class="filter-container">
+        <label for="dayFilter">Filter by Day:</label>
+        <select id="dayFilter">
+            <option value="All">All</option>
+            <option value="Saturday">Saturday</option>
+            <option value="Sunday">Sunday</option>
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+        </select>
+    </div>
+    <div class="filter-container">  
+      <label for="searchBar">Search:</label>
+      <input type="text" id="searchBar" placeholder="Search by text..." />
+  </div>
+    <div class="button-container">
+        <button id="printButton">Print</button>
+        <button id="convertToPdfButton">Convert to PDF</button>
+    </div>
+    
+
+    <div class="routine-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Session</th>
+                    <th>8.00-8.50</th>
+                    <th>9.00-9.50</th>
+                    <th>10.00-10.50</th>
+                    <th>11.00-11.50</th>
+                    <th>12.00-12.50</th>
+                    <th>1.00-1.50</th>
+                    <th>2.00-2.50</th>
+                    <th>3.00-3.50</th>
+                    <th>4.00-4.50</th>
+                    <th>5.00-5.50</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th rowspan="5">Saturday</th>
+                <td>2023-24</td>
+                <td colspan="2"></td>
+                <td colspan="2">ENG 105(NH)<br>Tutorial Room-1001</td> 
+                <td></td> 
+                <td colspan="2">HIS 109(SN)<br>Tutorial Room-1001</td>
+                <td colspan="2"></td>   
+              </tr>
+              <tr>
+                <td>2022-23</td>
+                <td colspan="2"></td>
+                <td colspan="2"></td> 
+                <td></td> 
+                <td colspan="2"></td>
+                <td colspan="2"></td>   
+              </tr>
+              <tr>
+                <td>2021-22</td> 
+                <td colspan="2">CSE 219(AAW)<br>Tutorial Room-2001</td>
+                <td colspan="2">ET 215(MRK)<br>Lecture Room-2001</td> 
+                <td></td> 
+                <td colspan="2">ET 217(MRK)<br>Tutorial Room-2001</td>
+                <td colspan="2">PROG 212(AH)<br>Sessional G-1 Room-1201</td>
+                </tr>
+              <tr>
+                <td>2020-21</td>
+                <td colspan="2">ICTE 4363<a href="https://edte.bdu.ac.bd/profile/Zarif">(RI)</a><br>Lecture Room-4001</td>
+              
+                <td colspan="2">ICTE 4331<a href="https://edte.bdu.ac.bd/profile/sunjida0001">(SA)</a><br>Lecture Room-4001</td> 
+                <td></td> 
+                <td colspan="2">ICTE 4332<a href="https://edte.bdu.ac.bd/profile/sunjida0001">(SA)</a><br>Sessional G-1 Room-1202</td>
+                <td colspan="2">ICTE 4332<a href="https://edte.bdu.ac.bd/profile/sunjida0001">(SA)</a><br>Sessional G-2 Room-1202</td>  
+              </tr>
+              <tr>
+                <td>2019-20</td> 
+                <td colspan="2"></td>
+                <td colspan="2"></td> 
+                <td></td> 
+                <td colspan="2"></td>
+                <td colspan="2"></td> 
+              </tr>
+              <tr>
+                <th rowspan="5">Sunday</th>
+                <td>2023-24</td>
+                <td colspan="2">ENG 105(NH)<br>Lecture Room-1001</td>
+                <td colspan="2">PROG 101(RS)<br>Tutorial Room-1001</td> 
+                <td></td> 
+                <td colspan="2"></td>
+                <td colspan="2">HIS 109(SN)<br>Lecture Room-4001</td>   
+              </tr>
+              <tr>
+                <td>2022-23</td>
+                <td colspan="2">MATH 217(SCS)<br>Lecture Room-4001</td>
+                <td colspan="2">ET 205(ZN)<br>Lecture Room-4001</td> 
+                <td></td> 
+                <td colspan="2">CSE 202(MA)<br>Sessional G-1 Room-4701<br>CSE 204(SA)<br>Sessional G-2 Room-2701</td>
+                <td colspan="2">CSE 202(MA)<br>Sessional G-2 Room-4701<br>CSE 204(SA)<br>Sessional G-1 Room-2701</td>  
+              </tr>
+              <tr>
+                  <td>2021-22</td> 
+                  <td colspan="2">ET 215(MRK)<br>Tutorial Room-2001</td>
+                <td colspan="2"></td> 
+                <td></td> 
+                <td colspan="2">ET 217(MRK)<br>Lecture Room-4001</td>
+                <td colspan="2">PROG 211(AH)<br>Lecture Room-2001</td> 
+                </tr>
+              <tr>
+                  <td>2020-21</td>
+                  <td colspan="2">ICTE 4336(FI)<br>Sessional G-1 Room-2701<br>ICTE 4364(RI)<br>Sessional G-2 Room-4701</td>
+                <td colspan="2">ICTE 4336(FI)<br>Sessional G-2 Room-2701<br>ICTE 4364(RI)<br>Sessional G-1 Room-4701</td> 
+                <td></td> 
+                <td colspan="2">ACC 4301(RB)<br>Tutorial Room-1001</td>
+                <td colspan="2">ICTE 4333(RB)<br>Lecture Room-1001</td>  
+              </tr>
+              <tr>
+                <td>2019-20</td> 
+                <td colspan="2"></td>
+                <td colspan="2">ICTE 4439(MDK)<br>Lecture Room-2001</td> 
+                <td></td> 
+                <td colspan="2">ICT 4461(RH)<br>Lecture Room-2001</td>
+                <td colspan="2"></td> 
+              </tr>
+              <tr>
+                <th rowspan="5">Monday</th>
+                <td>2023-24</td>
+                <td colspan="2"></td>
+                <td colspan="2">PROG 101(RS)<br>Lecture Room-1001</td> 
+                <td></td> 
+                <td colspan="2"></td>
+                <td colspan="2">DS 107(SMRH)<br>Lecture Room-1001</td>   
+              </tr>
+              <tr>
+                <td>2022-23</td>
+                <td colspan="2"></td>
+                <td colspan="2">ET 205(ZN)<br>Tutorial Room-2001</td> 
+                <td></td> 
+                <td colspan="2">CSE 201(MA)<br>Lecture Room-4001</td>
+                <td colspan="2"></td>  
+              </tr>
+              <tr>
+                <td>2021-22</td> 
+                <td colspan="2"></td>
+                <td colspan="2"></td> 
+                <td></td> 
+                <td colspan="2">ET 214(ZF)<br>Sessional G-1 Room-2701<br>ET 218(MRK)<br>Sessional G-2 Room-4701</td>
+                <td colspan="2">ET 214(ZF)<br>Sessional G-2 Room-2701<br>ET 218(MRK)<br>Sessional G-1 Room-4701</td> 
+                </tr>
+              <tr>
+                  <td>2020-21</td>
+                  <td colspan="2">ICTE 4333(RB)<br>Tutorial Room-2001</td>
+                <td colspan="2">ICTE 4335(FI)<br>Lecture Room-4001</td> 
+                <td></td> 
+                <td colspan="2">ACC 4301(RB)<br>Lecture Room-1001</td>
+                <td colspan="2">ICTE 4363(RI)<br>Lecture Room-4001</td>  
+              </tr>
+              <tr>
+                <td>2019-20</td> 
+                <td colspan="2"></td>
+                <td colspan="2">ICT 4462(RH)<br>Sessional G-2 Room-2701<br>ICT 4460(AR)<br>Sessional G-1 Room-4701</td> 
+                <td></td> 
+                <td colspan="2">ICT 4461(RH)<br>Tutorial Room-2001</td>
+                <td colspan="2">ICT 4459(AR)<br>Lecture Room-2001</td> 
+              </tr>
+              <tr>
+                <th rowspan="5">Tuesday</th>
+                <td>2023-24</td>
+                <td colspan="2"></td>
+                <td colspan="2"></td> 
+                <td></td> 
+                <td colspan="2"></td>
+                <td colspan="2">ET 103<a href="https://edte.bdu.ac.bd/profile/ashrafuzzaman">(AZ)</a><br>Lecture Room-2001</td>   
+              </tr>
+              <tr>
+                <td>2022-23</td>
+                <td colspan="2">CSE 203(SA)<br>Lecture Room-4001</td>
+                <td colspan="2">ET 207(ZN)<br>Lecture Room-4001</td> 
+                <td></td> 
+                <td colspan="2">ET 205(ZN)<br>Tutorial Room-1001</td>
+                <td colspan="2">CSE 201(MA)<br>Tutorial Room-4001</td>  
+              </tr>
+              <tr>
+                <td>2021-22</td> 
+                <td colspan="2">PROG 211(AH)<br>Tutorial Room-1001</td>
+                <td colspan="2">ET 213 (ZF)<br>Tutorial Room-1001</td> 
+                <td></td> 
+                <td colspan="2"></td>
+                <td colspan="2"></td> 
+                </tr>
+              <tr>
+                  <td>2020-21</td>
+                  <td colspan="2"></td>
+                <td colspan="2">ICTE 4335(FI)<br>Tutorial Room-2001</td> 
+                <td></td> 
+                <td colspan="2">ICTE 4331(SA)<br>Tutorial Room-4001</td>
+                <td colspan="2"></td>  
+              </tr>
+              <tr>
+                <td>2019-20</td> 
+                <td colspan="2">ICTE 4439(MDK)<br>Tutorial Room-2001</td>
+                <td colspan="2"></td> 
+                <td></td> 
+                <td colspan="2">EDU 4413(ZF)<br>Lecture Room-2001</td>
+                <td colspan="2"></td> 
+              </tr>
+            <tr>
+                <th rowspan="5">Wednesday</th>
+                <td>2023-24</td>
+                <td colspan="2">PROG 102(RS)<br>Sessional G-1 Room-4701<br>ENG 106(NH)<br>Sessional G-2 Room-2701</td>
+                <td colspan="2">PROG 102(RS)<br>Sessional G-2 Room-4701<br>ENG 106(NH)<br>Sessional G-1 Room-2701</td> 
+                <td></td> 
+                <td colspan="2">ET 103(AZ)<br>Tutorial Room-2001</td>
+                <td colspan="2">DS 107(SMRH)<br>Tutorial Room-1001</td>   
+              </tr>
+              <tr>
+                <td>2022-23</td>
+                <td colspan="2"></td>
+                <td colspan="2">CSE 203(SA)<br>Tutorial Room-4001</td> 
+                <td></td> 
+                <td colspan="2">MATH 217(SCS)</td>
+                <td colspan="2"></td>  
+              </tr>
+              <tr>
+                  <td>2021-22</td> 
+                  <td colspan="2">ET 213(ZF)<br>Lecture Room-2001</td>
+                <td colspan="2"></td> 
+                <td></td> 
+                <td colspan="2">CSE 219(AAW)<br>Tutorial Room-1001</td>
+                <td colspan="2">PROG 212(AH)<br>Sessional G-2 Room-4701</td> 
+                </tr>
+              <tr>
+                  <td>2020-21</td>
+                  <td colspan="2"></td>
+                <td colspan="2"></td> 
+                <td></td> 
+                <td colspan="2"></td>
+                <td colspan="2"></td>  
+              </tr>
+              <tr>
+                <td>2019-20</td> 
+                <td colspan="2"></td>
+                <td colspan="2">EDU 4413(ZF)<br>Tutorial Room-2001</td> 
+                <td></td> 
+                <td colspan="2">ICT 4462(RH)<br>Sessional G-1 Room-2701<br>ICT 4460(AR)<br>Sessional G-2 Room-4701</td>
+                <td colspan="2">ICT 4459(AR)<br>Tutorial Room-2001</td> 
+              </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+      function updateClock() {
+          const now = new Date();
+          const hours = String(now.getHours()).padStart(2, '0');
+          const minutes = String(now.getMinutes()).padStart(2, '0');
+          const seconds = String(now.getSeconds()).padStart(2, '0');
+
+          const timeString = `${hours}:${minutes}:${seconds}`;
+          document.getElementById('clock').textContent = timeString;
+      }
+
+      // Update the clock immediately and then every second
+      updateClock();
+      setInterval(updateClock, 1000);
+  </script>
+</body>
+</html>
